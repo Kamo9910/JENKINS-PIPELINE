@@ -8,6 +8,11 @@ pipeline {
   }
 
   stages {
+         stage('Build') {
+            steps {
+                sh "sed -i 's/\$APP_VERSION/${APP_VERSION}/g' index.html"
+               }
+          }
           stage('AWS') {
             agent {
                 docker {
