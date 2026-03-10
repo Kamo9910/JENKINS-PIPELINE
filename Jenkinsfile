@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     AWS_REGION = "us-east-1"
-    AWS_S3_BUCKET = "my-static-website-38097d4f"
+    AWS_S3_BUCKET = "my-static-website-1cbcfd72"
     APP_VERSION = "1.0.$BUILD_ID"
   }
 
