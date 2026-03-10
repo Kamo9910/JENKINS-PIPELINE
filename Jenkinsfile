@@ -13,7 +13,7 @@ pipeline {
                 sh "sed -i 's/\$APP_VERSION/${APP_VERSION}/g' index.html"
                }
           }
-          stage('AWS') {
+          stage('Deploying to S3') {
             agent {
                 docker {
                     image 'amazon/aws-cli'
@@ -28,15 +28,8 @@ pipeline {
                 sh'''
                     aws --version
                     aws s3 sync . s3://$AWS_S3_BUCKET --delete
+                    echo "Website deployed successfully! The endpoint URL is available in your AWS S3 console."
                 '''
-                }
-            }
-        }
-            stage('Deploy') {
-
-                steps {
-                    withCredentials([usernamePassword(credentialsId: 'my-aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                    sh "echo 'STATIC_WEBSITE_ENDPOINT: ${STATIC_WEBSITE_ENDPOINT}'"
                 }
             }
         }
