@@ -35,7 +35,9 @@ pipeline {
             stage('Deploy') {
 
                 steps {
-                    sh "echo 'STATIC_WEBSITE_ENDPOINT: ${STATIC_WEBSITE_ENDPOINT}'
+                    withCredentials([usernamePassword(credentialsId: 'my-aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                    sh "echo 'STATIC_WEBSITE_ENDPOINT: ${STATIC_WEBSITE_ENDPOINT}'"
+                }
             }
         }
     }
