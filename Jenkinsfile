@@ -36,7 +36,6 @@ pipeline {
 
                 steps {
                     sh "echo ${STATIC_WEBSITE_ENDPOINT}"
-                    sh'The endpoint URL of the S3 static website.'
             }
         }
     }
