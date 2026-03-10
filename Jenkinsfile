@@ -35,7 +35,7 @@ pipeline {
             stage('Deploy') {
 
                 steps {
-                    sh "echo ${STATIC_WEBSITE_ENDPOINT}"
+                    sh "echo 'STATIC_WEBSITE_ENDPOINT: ${STATIC_WEBSITE_ENDPOINT}'
             }
         }
     }
