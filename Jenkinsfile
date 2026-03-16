@@ -13,6 +13,25 @@ pipeline {
                 sh "sed -i 's/\$APP_VERSION/${APP_VERSION}/g' index.html"
                }
           }
+          stage('Deploy to AWS') {
+            agent {
+                docker {
+                    image 'amazon/aws-cli'
+                    reuseNode true
+                    args "--entrypoint=''"
+                }
+            }
+           
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'my-aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                sh'''
+                    aws --version
+                    aws ecs register-task-definition --cli-input-json file://aws/task-definition-prod.json 
+                    aws ecs update-service --cluster learnJenkins-Cluster-Prod --service my--http-service --task-definition amazon-ecs-sample
+                '''
+                }
+            }
+        }
           stage('Deploying to S3') {
             agent {
                 docker {
